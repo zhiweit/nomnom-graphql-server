@@ -1,9 +1,9 @@
-import { neoSchema } from "./neoSchema.js";
+import { neoSchema } from "./lib/neoSchema.js";
+import Logger from "./lib/logger.js";
 
 import { ApolloServer, ApolloServerPlugin } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { startStandaloneServer } from "@apollo/server/standalone";
 
 import express from "express";
 import http from "http";
@@ -23,24 +23,24 @@ const plugins: ApolloServerPlugin<ApolloServerContext>[] = [
   {
     // Fires whenever a GraphQL request is received from a client.
     async requestDidStart(requestContext) {
-      console.log(
+      Logger.info(
         "Request started! Query: " + requestContext.request.operationName
       );
     },
     async startupDidFail({ error }) {
-      console.error("Startup failed: ", error);
+      Logger.error("Startup failed: ", error);
     },
 
     async contextCreationDidFail({ error }) {
-      console.error("Context creation failed: ", error);
+      Logger.error("Context creation failed: ", error);
     },
 
     async unexpectedErrorProcessingRequest({ requestContext, error }) {
-      console.error("Unexpected error processing request: ", error);
+      Logger.error("Unexpected error processing request: ", error);
     },
 
     async invalidRequestWasReceived({ error }) {
-      console.error("Invalid request received: ", error);
+      Logger.error("Invalid request received: ", error);
     },
   },
 ];
@@ -72,5 +72,5 @@ app.use(
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
-  console.log(`🚀  Server ready at path ${PORT}/api/graphql`);
+  Logger.info(`🚀  Server ready at path ${PORT}/api/graphql`);
 });

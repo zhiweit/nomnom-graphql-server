@@ -1,16 +1,3 @@
-// {
-//   "compilerOptions": {
-//     "lib": ["es2020"],
-//     "target": "es2020",
-//     "module": "esnext",
-//     "moduleResolution": "node",
-//     "esModuleInterop": true,
-//     "types": ["node"],
-//     "skipLibCheck": true,
-//     "outDir": "dist"
-//   },
-//   "include": ["src/**/*"]
-// }
 {
   "compilerOptions": {
     "rootDirs": ["src"],
