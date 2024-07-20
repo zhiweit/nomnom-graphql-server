@@ -7,7 +7,6 @@ dotenv.config();
 
 const typeDefs = /* GraphQL */ `
   #graphql
-
   type Actor {
     id: ID! @id
     actedInMovies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
@@ -83,6 +82,8 @@ const typeDefs = /* GraphQL */ `
     contents: String!
     createdAt: DateTime! @timestamp(operations: [CREATE])
     updatedAt: DateTime! @timestamp
+    joined_ingredients: String!
+    cleaned_contents: String!
   }
 
   type Query {
@@ -190,17 +191,16 @@ const typeDefs = /* GraphQL */ `
       )
   }
 
-  # extend type ChatMessage @mutation {
-  #   createMessage(id: ID!, content: String!, sessionId: ID!): ChatMessage
-  #     @cypher(
-  #       statement: """
-  #       MATCH (s:ChatSession {id: $sessionId})
-  #       CREATE (m:ChatMessage {id: $id, content: $content, createdAt: datetime()})
-  #       CREATE (s)-[:HAS_MESSAGE]->(m)
-  #       RETURN m
-  #       """
-  #     )
-  # }
+  type Mutation {
+    createChatSessionMutation: ChatSession
+      @cypher(
+        statement: """
+        CREATE (cs:ChatSession {id: apoc.create.uuid(), createdAt: datetime()})
+        RETURN cs
+        """
+        columnName: "cs"
+      )
+  }
 `;
 
 // Create a Neo4j driver instance to connect to Neo4j AuraDB
