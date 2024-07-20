@@ -65,7 +65,7 @@ const typeDefs = /* GraphQL */ `
     @authorization(
       validate: [
         {
-          operations: [CREATE, UPDATE, DELETE]
+          operations: [CREATE, DELETE]
           where: { node: { owner: { id: "$jwt.sub" } } }
         }
       ]
