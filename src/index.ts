@@ -69,6 +69,10 @@ app.use(
   })
 );
 
+app.get("/healthcheck", (req, res) => {
+  res.send("OK");
+});
+
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
