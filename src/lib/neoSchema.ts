@@ -201,6 +201,18 @@ const typeDefs = /* GraphQL */ `
         columnName: "cs"
       )
   }
+
+    type Query {
+    getRecipeByFollowedUser(userId: ID!): [Recipe]
+      @cypher(
+        statement: """
+        MATCH (u:User)-[:FOLLOWS]->(followed:User)-[:OWNS]->(r:Recipe)
+        WHERE u.id = $userId
+        RETURN r
+        """
+        columnName: "r"
+      )
+  }
 `;
 
 // Create a Neo4j driver instance to connect to Neo4j AuraDB
