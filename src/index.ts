@@ -9,6 +9,7 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
+import { ApolloServerPluginLandingPageDisabled } from "@apollo/server/plugin/disabled";
 
 dotenv.config();
 
@@ -48,9 +49,14 @@ const plugins: ApolloServerPlugin<ApolloServerContext>[] = [
 const drainHttpServerPlugin = ApolloServerPluginDrainHttpServer({ httpServer });
 plugins.push(drainHttpServerPlugin);
 
+if (process.env.NODE_ENV !== "development") {
+  plugins.push(ApolloServerPluginLandingPageDisabled());
+}
+
 const server = new ApolloServer<ApolloServerContext>({
   schema: await neoSchema.getSchema(),
   plugins: plugins,
+  introspection: process.env.NODE_ENV === "development",
 });
 
 // Ensure we wait for our server to start
@@ -76,5 +82,5 @@ app.get("/healthcheck", (req, res) => {
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
-  Logger.info(`🚀  Server ready at path ${PORT}/api/graphql`);
+  Logger.info(`🚀  Server ready at path :${PORT}/api/graphql`);
 });
