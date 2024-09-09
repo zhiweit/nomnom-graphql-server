@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node ./dist/index.js",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch api/index.ts"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "winston": "^3.13.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/node": "^20.14.11",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"

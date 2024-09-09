@@ -64,9 +64,21 @@ await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function.
+// const allowedOrigins = ["https://nomnom-alpha.vercel.app"];
+
+app.options("*", cors()); // include before other routes
+
 app.use(
   "/api/graphql",
-  cors<cors.CorsRequest>(),
+  cors<cors.CorsRequest>({
+    origin: "*",
+    // origin: function (origin, callback) {
+    //   if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    //     callback(null, true);
+    //   } else {
+    //     callback(new Error("Not allowed by CORS"));
+    // }
+  }),
   express.json(),
   // expressMiddleware accepts the same arguments:
   // an Apollo Server instance and optional configuration options
