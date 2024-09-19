@@ -49,9 +49,9 @@ const plugins: ApolloServerPlugin<ApolloServerContext>[] = [
 const drainHttpServerPlugin = ApolloServerPluginDrainHttpServer({ httpServer });
 plugins.push(drainHttpServerPlugin);
 
-if (process.env.NODE_ENV !== "development") {
-  plugins.push(ApolloServerPluginLandingPageDisabled());
-}
+// if (process.env.NODE_ENV !== "development") {
+//   plugins.push(ApolloServerPluginLandingPageDisabled());
+// }
 
 const server = new ApolloServer<ApolloServerContext>({
   schema: await neoSchema.getSchema(),
